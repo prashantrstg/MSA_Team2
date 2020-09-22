@@ -18,11 +18,11 @@ datasource:`productdb`
 | categoryid  | int | 
 | categoryname| string | 
 | description | string | 
-	
-###Table2 
+
+###Table2
+
 
 `PRODUCT'                 
-
 | field name  | type| 
 | ---------- -| -------| 
 | productid   | int| 
@@ -43,20 +43,20 @@ datasource:`productdb`
 		"categoryname": "cName1",
 		"description": "cDes1"
 	}
-ResponseCode: 201
+- ResponseCode: 201
 	
 
 
 2) VIEW Category ( View a Category)
 
 `GET 	<Hostname>:8010//category/{categoryID}`
-ResponseCode: 200
+- ResponseCode: 200
 
 
 3)LIST Category ( List all Categories)
 
 `GET 	<Hostname>:8010//categories`
-ResponseCode: 200
+- ResponseCode: 200
 
 
 4)MODIFY Category ( Modify Category)
@@ -73,7 +73,7 @@ ResponseCode: 200
 1) ADD Product ( Create a product)
 
 `POST 	<Hostname>:8010//addProduct`
-    -request body 	{
+	- Request body 	{
 		"productid": 200,
 		"productname": "pName1",
 		"description": "pDes1",
@@ -88,20 +88,21 @@ ResponseCode: 200
 
 `GET 	<Hostname>:8010//product/{productID}`
 - ResponseCode: 200
-    - Response Body:{
+- Response Body:
+{
 		"productid": 200,
 		"productname": "pName1",
 		"description": "pDes1",
 		"categoryname": "cName"
-		}
-	}
+}
 
 
 3)LIST Product ( List all Products)
 
 `GET 	<Hostname>:8010//products`
 - ResponseCode: 200
-    - Response Body:[
+- Response Body:
+[
     {
 		"productid": 100,
 		"productname": "pName1",
