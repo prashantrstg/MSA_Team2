@@ -39,6 +39,7 @@ datasource:`productdb`
 		"categoryname": "cName1",
 		"description": "cDes1"
 	}
+	
 - ResponseCode: 201
 	
 
@@ -46,12 +47,14 @@ datasource:`productdb`
 2) VIEW Category ( View a Category)
 
 `GET 	<Hostname>:8010//category/{categoryID}`
+
 - ResponseCode: 200
 
 
 3)LIST Category ( List all Categories)
 
 `GET 	<Hostname>:8010//categories`
+
 - ResponseCode: 200
 
 
@@ -64,6 +67,7 @@ datasource:`productdb`
 		"description": "cDes1Modified"
 	}
 
+- ResponseCode: 200
 
 #### Product APIs
 
@@ -79,12 +83,14 @@ datasource:`productdb`
 		    "categoryid":100
 		}
 	}
-- ResponseCode : 200
+	
+- ResponseCode : 201
 
 
 2) VIEW Product ( View a Product)
 
 `GET 	<Hostname>:8010//product/{productID}`
+
 - ResponseCode: 200
 - Response Body:
 {
@@ -98,6 +104,7 @@ datasource:`productdb`
 3)LIST Product ( List all Products)
 
 `GET 	<Hostname>:8010//products`
+
 - ResponseCode: 200
 - Response Body:
 [
@@ -125,13 +132,17 @@ datasource:`productdb`
 		"categoryname": "pName1Modified",
 		"description": "cDes1Modified"
 	}
+	
 - Response Code: 200
 - Response Body:  
         {
 		"productid": 100,
 		"productname": "pName1",
 		"description": "pDes1",
-		"categoryname": "cName"
+		"categoryname": "cName",	
+		"category":{
+		    "categoryid":100
+		}
 		}
 
 
