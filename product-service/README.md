@@ -22,8 +22,11 @@ datasource:`productdb`
 ##Table2
 
 **PRODUCT**
-| field name  | type|
-| ---------- -| -------|
+
+| field name  | type |
+
+| -----------| ------|
+
 | productid | int |
 | productname | string|
 |description | string|
