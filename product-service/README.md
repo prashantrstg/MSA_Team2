@@ -13,21 +13,22 @@ datasource:`productdb`
 ###Table1: 
 
 `CATEGORY'                 
-field name  | type
-------------| -------------
-categoryid  | <int>
-categoryname| <string>
-description | <string>
+| field name  | type | 
+| -----------| ------
+| categoryid  | int | 
+| categoryname| string | 
+| description | string | 
 	
-###Table2: 
+###Table2 
 
 `PRODUCT'                 
-field name  | type
----------- -| -------------
-productid   | <int>
-productname | <string>
-description | <string>
-category      <CATEGORY>
+
+| field name  | type| 
+| ---------- -| -------| 
+| productid   | int| 
+| productname | string| 
+|description | string| 
+| category   |  CATEGORY| 
 
 
 ###BUSINESS API's
