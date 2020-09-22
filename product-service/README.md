@@ -1,6 +1,6 @@
 # APPLICATION INFO
 
-##Service : `Product Service`
+Service : `Product Service`
 
 Application Name: `product-service`
 
@@ -9,21 +9,30 @@ TABLE INFO:
 database: `H2`
 
 datasource:`productdb`
+                    
+###Table1: 
 
-Table1: `CATEGORY
-        categoryid <int>
-        categoryname <string>
-        description<string>`
+`CATEGORY'                 
+field name  | type
+------------| -------------
+categoryid  | <int>
+categoryname| <string>
+description | <string>
 	
-Table2: `PRODUCT
-        productid <int>
-        productname <string>
-        description<string>   
-        category<CATEGORY>`
+###Table2: 
 
-BUSINESS API's
+`PRODUCT'                 
+field name  | type
+---------- -| -------------
+productid   | <int>
+productname | <string>
+description | <string>
+category      <CATEGORY>
 
-Category CRUD
+
+###BUSINESS API's
+
+'Category APIs'
 
 1) ADD Category ( Create a product Category)
 
@@ -58,7 +67,7 @@ ResponseCode: 200
 	}
 
 
-###Product CRUD	
+'Product APIs'
 
 1) ADD Product ( Create a product)
 
