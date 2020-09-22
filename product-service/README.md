@@ -9,29 +9,22 @@ TABLE INFO:
 database: `H2`
 
 datasource:`productdb`
-                    
 ##Table1: 
+**PRODUCT**
+| field name  | type |
+| -----------| ------|
+| productid  | int |
+| productname| string |
+| description| string |
+| category | CATEGORY |
+                    
+##Table2: 
 **CATEGORY**
 | field name  | type |
 | -----------| ------|
 | categoryid  | int |
 | categoryname| string |
 | description | string |
-
-
-##Table2
-
-**PRODUCT**
-
-| field name  | type |
-
-| -----------| ------|
-
-| productid | int |
-| productname | string|
-|description | string|
-| category   |  CATEGORY|
-
 
 
 ## **BUSINESS API's**
@@ -64,6 +57,7 @@ datasource:`productdb`
 
 4)MODIFY Category ( Modify Category)
 `POST 	<Hostname>:8010//category`
+
     -request body 	{
 		"categoryid": 100,
 		"categoryname": "cName1Modified",
@@ -76,6 +70,7 @@ datasource:`productdb`
 1) ADD Product ( Create a product)
 
 `POST 	<Hostname>:8010//addProduct`
+
 	- Request body 	{
 		"productid": 200,
 		"productname": "pName1",
@@ -124,6 +119,7 @@ datasource:`productdb`
 4)MODIFY Product ( Modify product)
 
 `POST 	<Hostname>:8010//category`
+
     -request body 	{
 		"categoryid": 200,
 		"categoryname": "pName1Modified",
