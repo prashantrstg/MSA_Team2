@@ -1,15 +1,20 @@
 # APPLICATION INFO
 
 ##Service : `Product Service`
+
 ##Application Name: `product-service`
 
 ##TABLE INFO:
+
 ###database: `H2`
+
 ###datasource:`productdb`
+
 ##Table1: `CATEGORY
         categoryid <int>
         categoryname <string>
         description<string>`
+	
 ##Table2: `PRODUCT
         productid <int>
         productname <string>
@@ -17,7 +22,9 @@
         category<CATEGORY>`
 
 ##BUSINESS API's
+
 ###Category CRUD
+
 1) ADD Category ( Create a product Category)
 `POST 	<Hostname>:8010//addCategory`
     -request body 	{
@@ -27,13 +34,17 @@
 	}
 ResponseCode: 201
 	
+
+
 2) VIEW Category ( View a Category)
 `GET 	<Hostname>:8010//category/{categoryID}`
 ResponseCode: 200
 
+
 3)LIST Category ( List all Categories)
 `GET 	<Hostname>:8010//categories`
 ResponseCode: 200
+
 
 4)MODIFY Category ( Modify Category)
 `POST 	<Hostname>:8010//category`
@@ -43,7 +54,9 @@ ResponseCode: 200
 		"description": "cDes1Modified"
 	}
 
+
 ###Product CRUD	
+
 1) ADD Product ( Create a product)
 `POST 	<Hostname>:8010//addProduct`
     -request body 	{
@@ -55,7 +68,8 @@ ResponseCode: 200
 		}
 	}
 - ResponseCode : 200
-	
+
+
 2) VIEW Product ( View a Product)
 `GET 	<Hostname>:8010//product/{productID}`
 - ResponseCode: 200
@@ -66,7 +80,8 @@ ResponseCode: 200
 		"categoryname": "cName"
 		}
 	}
-    
+
+
 3)LIST Product ( List all Products)
 `GET 	<Hostname>:8010//products`
 - ResponseCode: 200
@@ -84,6 +99,8 @@ ResponseCode: 200
 		"category": "cName001"
 	}
     ]
+
+
 4)MODIFY Product ( Modify product)
 `POST 	<Hostname>:8010//category`
     -request body 	{
@@ -99,9 +116,10 @@ ResponseCode: 200
 		"description": "pDes1",
 		"categoryname": "cName"
 		}
-	
-ERROR:
-`{
+
+
+'ERROR:
+```{
     "errorMessage": "No value present",
     "requestedURI": "/product/100001"
-}`
+}````
