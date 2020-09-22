@@ -2,30 +2,31 @@
 
 ##Service : `Product Service`
 
-##Application Name: `product-service`
+Application Name: `product-service`
 
-##TABLE INFO:
+TABLE INFO:
 
-###database: `H2`
+database: `H2`
 
-###datasource:`productdb`
+datasource:`productdb`
 
-##Table1: `CATEGORY
+Table1: `CATEGORY
         categoryid <int>
         categoryname <string>
         description<string>`
 	
-##Table2: `PRODUCT
+Table2: `PRODUCT
         productid <int>
         productname <string>
         description<string>   
         category<CATEGORY>`
 
-##BUSINESS API's
+BUSINESS API's
 
-###Category CRUD
+Category CRUD
 
 1) ADD Category ( Create a product Category)
+
 `POST 	<Hostname>:8010//addCategory`
     -request body 	{
 		"categoryid": 100,
@@ -37,11 +38,13 @@ ResponseCode: 201
 
 
 2) VIEW Category ( View a Category)
+
 `GET 	<Hostname>:8010//category/{categoryID}`
 ResponseCode: 200
 
 
 3)LIST Category ( List all Categories)
+
 `GET 	<Hostname>:8010//categories`
 ResponseCode: 200
 
@@ -58,6 +61,7 @@ ResponseCode: 200
 ###Product CRUD	
 
 1) ADD Product ( Create a product)
+
 `POST 	<Hostname>:8010//addProduct`
     -request body 	{
 		"productid": 200,
@@ -71,6 +75,7 @@ ResponseCode: 200
 
 
 2) VIEW Product ( View a Product)
+
 `GET 	<Hostname>:8010//product/{productID}`
 - ResponseCode: 200
     - Response Body:{
@@ -83,6 +88,7 @@ ResponseCode: 200
 
 
 3)LIST Product ( List all Products)
+
 `GET 	<Hostname>:8010//products`
 - ResponseCode: 200
     - Response Body:[
@@ -102,6 +108,7 @@ ResponseCode: 200
 
 
 4)MODIFY Product ( Modify product)
+
 `POST 	<Hostname>:8010//category`
     -request body 	{
 		"categoryid": 200,
