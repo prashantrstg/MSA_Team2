@@ -10,31 +10,30 @@ database: `H2`
 
 datasource:`productdb`
                     
-###Table1: 
-
-`CATEGORY'                 
-| field name  | type | 
-| -----------| ------
-| categoryid  | int | 
-| categoryname| string | 
-| description | string | 
-
-###Table2
-
- `''  
-
-`PRODUCT'                 
-| field name  | type| 
-| ---------- -| -------| 
-| productid   | int| 
-| productname | string| 
-|description | string| 
-| category   |  CATEGORY| 
+##Table1: 
+**CATEGORY**
+| field name  | type |
+| -----------| ------|
+| categoryid  | int |
+| categoryname| string |
+| description | string |
 
 
-###BUSINESS API's
+##Table2
 
-'Category APIs'
+**PRODUCT**
+| field name  | type|
+| ---------- -| -------|
+| productid | int |
+| productname | string|
+|description | string|
+| category   |  CATEGORY|
+
+
+
+## **BUSINESS API's**
+
+#### Category APIs
 
 1) ADD Category ( Create a product Category)
 
@@ -69,7 +68,7 @@ datasource:`productdb`
 	}
 
 
-'Product APIs'
+#### Product APIs
 
 1) ADD Product ( Create a product)
 
@@ -137,8 +136,10 @@ datasource:`productdb`
 		}
 
 
-'ERROR:'
-```{
+ERROR:
+```
+{
     "errorMessage": "No value present",
     "requestedURI": "/product/100001"
-}```
+}
+```
