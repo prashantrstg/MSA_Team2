@@ -63,3 +63,13 @@ ERROR:
     "message": "Product id-1005",
     "details": "uri=//meru/product/price/1005"
 }
+
+## IMPORTANT NOTES ###
+1>> Application Name for my Pricing Microservice is "pricing"
+   spring.application.name=pricing
+
+2> eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
+3> spring.cloud.config.uri = http://localhost:8888
+
+
