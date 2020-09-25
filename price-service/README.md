@@ -1,6 +1,6 @@
-##TABLE INFO:
+## TABLE INFO:
 
-## SQL> show columns from product_price;
+SQL> show columns from product_price;
 FIELD	TYPE		NULL	KEY	DEFAULT 
 ------------------------------------------------ 
 PROD_ID	BIGINT(19)	NO	PRI	NULL
