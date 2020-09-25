@@ -1,4 +1,5 @@
 ##TABLE INFO:
+
 SQL> show columns from product_price;
 FIELD	TYPE		NULL	KEY	DEFAULT 
 ------------------------------------------------ 
