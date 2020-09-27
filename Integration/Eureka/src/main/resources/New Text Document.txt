@@ -1,0 +1,517 @@
+/**
+
+*
+
+ */
+
+package com.poc.productview.controller;
+
+ 
+
+import java.util.List;
+
+import java.util.Optional;
+
+ 
+
+import javax.validation.Valid;
+
+ 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.PutMapping;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RestController;
+
+ 
+
+import com.poc.productview.bean.ProductView;
+
+import com.poc.productview.exception.ProductFoundExceptionException;
+
+import com.poc.productview.service.ProductViewService;
+
+ 
+
+@RestController
+
+@RefreshScope
+
+@RequestMapping(path="/ProductViewService")
+
+public class ProductController {
+
+               
+
+                private static String PRODUCT_NOT_FOUND = "Product not found";
+
+               
+
+                @Autowired
+
+                ProductViewService productViewService;
+
+               
+
+                @Value("${welcome.message}")
+
+                   String welcomeText;
+
+                   
+
+                 
+
+                   @RequestMapping(value = "/msg")
+
+                   public String welcomeText() {
+
+                      return welcomeText;
+
+                   }
+
+               
+
+                @GetMapping("/products")
+
+                public ResponseEntity<List<ProductView>> getAllCustomers() {
+
+                                return ResponseEntity.ok(productViewService.getAllProducts());
+
+                }
+
+               
+
+                @GetMapping("/productdetails/{productId}")
+
+                public ResponseEntity<ProductView> getProductDetails(@PathVariable("productId") Long productId) {
+
+                                Optional<ProductView> productDetails = productViewService.getProductById(productId);
+
+                                if(!productDetails.isPresent()) {
+
+                                                throw new ProductFoundExceptionException(PRODUCT_NOT_FOUND);
+
+                                }
+
+                                return ResponseEntity.ok(productDetails.get());
+
+                }
+
+               
+
+                @PostMapping("/product")
+
+                public ResponseEntity<ProductView> createCustomer(@RequestBody @Valid ProductView productDetails) {
+
+                                return ResponseEntity.ok(productViewService.createProduct(productDetails));
+
+                }
+
+               
+
+                @PutMapping("/product/{id}")
+
+                public ResponseEntity<ProductView> updateCustomerById(@PathVariable("id") Long productId, @RequestBody @Valid ProductView product) {
+
+                                product.setProductId(productId);
+
+                                product = productViewService.updateProductById(product);
+
+                                if(product==null) {
+
+                                                throw new ProductFoundExceptionException(PRODUCT_NOT_FOUND);
+
+                                }
+
+                                return ResponseEntity.ok(product);
+
+                }
+
+               
+
+                @DeleteMapping("/product/{id}")
+
+                public ResponseEntity<ProductView> deleteProductById(@PathVariable("id") Long productId) {
+
+                                if(!productViewService.deleteProductById(productId)) {
+
+                                                throw new ProductFoundExceptionException(PRODUCT_NOT_FOUND);
+
+                                }
+
+                                return ResponseEntity.ok().build();
+
+                }
+
+}
+
+ 
+
+package com.poc.productview.exception;
+
+ 
+
+public class BusinessException extends RuntimeException{
+
+ 
+
+       /**
+
+       *
+
+        */
+
+       private static final long serialVersionUID = -2369786842818202898L;
+
+ 
+
+       public BusinessException(String message) {
+
+              super(message);
+
+       }
+
+}
+
+ 
+
+package com.poc.productview.exception;
+
+ 
+
+ 
+
+public class ErrorResponse {
+
+      
+
+       private String errorMessage;
+
+      
+
+       private int statusCode;
+
+      
+
+       public ErrorResponse(String errorMessage) {
+
+              this.errorMessage = errorMessage;
+
+       }
+
+ 
+
+       /**
+
+       * @return the errorMessage
+
+       */
+
+       public String getErrorMessage() {
+
+              return errorMessage;
+
+       }
+
+ 
+
+       /**
+
+       * @param errorMessage the errorMessage to set
+
+       */
+
+       public void setErrorMessage(String errorMessage) {
+
+              this.errorMessage = errorMessage;
+
+       }
+
+ 
+
+       /**
+
+       * @return the statusCode
+
+       */
+
+       public int getStatusCode() {
+
+              return statusCode;
+
+       }
+
+ 
+
+       /**
+
+       * @param statusCode the statusCode to set
+
+       */
+
+       public void setStatusCode(int statusCode) {
+
+              this.statusCode = statusCode;
+
+       }
+
+      
+
+ 
+
+}
+
+ 
+
+ 
+
+public class ProductFoundExceptionException extends RuntimeException{
+
+      
+
+       /**
+
+       *
+
+        */
+
+       private static final long serialVersionUID = 4396904040791142791L;
+
+ 
+
+       public ProductFoundExceptionException(String message) {
+
+              super(message);
+
+       }
+
+}
+
+ 
+
+@RestControllerAdvice
+
+public class RestExceptionHandler {
+
+      
+
+       @ExceptionHandler(ProductFoundExceptionException.class)
+
+       public ResponseEntity<ErrorResponse> exception(ProductFoundExceptionException e){
+
+              ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+
+              errorResponse.setStatusCode(HttpStatus.NOT_FOUND.value());
+
+              return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+       }
+
+      
+
+       @ExceptionHandler({BusinessException.class})
+
+       public ResponseEntity<ErrorResponse> exception(BusinessException e){
+
+              ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+
+              errorResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+              return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
+       }
+
+ 
+
+}
+
+ 
+
+public interface ProductViewRepository extends CrudRepository<ProductView, Long>{
+
+       @Transactional
+
+       Optional<ProductView> findByProductId(Long productId);
+
+       void deleteByProductId(Long productId);
+
+ 
+
+}
+
+ 
+
+@Service
+
+public class ProductViewService {
+
+      
+
+       @Autowired
+
+       ProductViewRepository productViewRepository;
+
+ 
+
+       @Transactional
+
+       public List<ProductView> getAllProducts() {
+
+              Iterable<ProductView> productIterable = productViewRepository.findAll();
+
+              List<ProductView> productList = new ArrayList<>();
+
+              productIterable.forEach(productList::add);
+
+              return productList ;
+
+       }
+
+ 
+
+       @Transactional
+
+       public Optional<ProductView> getProductById(Long customerKey) {
+
+              return productViewRepository.findByProductId(customerKey);
+
+              //return productViewRepository.findById(customerKey);
+
+       }
+
+ 
+
+       @Transactional
+
+       public ProductView createProduct(ProductView productView) {
+
+              return productViewRepository.save(productView);
+
+       }
+
+ 
+
+       @Transactional
+
+       public ProductView updateProductById(ProductView product) {
+
+              Optional<ProductView> productFetch = productViewRepository.findByProductId(product.getProductId());
+
+             
+
+              if(productFetch.isPresent()) {
+
+                     ProductView productEntity = new ProductView();
+
+                     productEntity.setProductKey(productFetch.get().getProductKey());
+
+                     productEntity.setProductId(product.getProductId());
+
+                     productEntity.setAvailability(product.getAvailability());
+
+                     productEntity.setSellingPrice(product.getSellingPrice());
+
+                     return productViewRepository.save(productEntity);
+
+              }
+
+              return null;
+
+       }
+
+ 
+
+       @Transactional
+
+       public boolean deleteProductById(Long productId) {
+
+              Optional<ProductView> customer = productViewRepository.findByProductId(productId);
+
+              if(customer.isPresent()) {
+
+                     productViewRepository.deleteByProductId(productId);
+
+                     return true;
+
+              }
+
+              return false;
+
+       }
+
+ 
+
+spring.application.name=ProductViewService
+
+ 
+
+###########H2 DB configurations###########
+
+spring.datasource.url=jdbc:h2:mem:productviewdb
+
+spring.datasource.driver-class-name=org.h2.Driver
+
+spring.datasource.username=admin
+
+spring.datasource.password=password
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+spring.jpa.show-sql=true
+
+spring.h2.console.path=/h2
+
+spring.h2.console.enabled=true
+
+management.security.enabled=false
+
+spring.h2.console.settings.trace=false
+
+spring.h2.console.settings.web-allow-others=false
+
+ 
+
+spring.cloud.config.uri=http://localhost:8760
+
+ 
+
+server.port=8083
+
+management.security.enabled=false
+
+management.endpoints.web.exposure.include=refresh
+
+ 
+
+eureka.instance.leaseRenewalIntervalInSeconds=1
+
+eureka.instance.leaseExpirationDurationInSeconds=2
+
+eureka.client.serviceUrl.defaultZone=http://127.0.0.1:8761/eureka/
+
+Regards,
+
+Siva Vemuri
+
+7259924488
+
+ 
