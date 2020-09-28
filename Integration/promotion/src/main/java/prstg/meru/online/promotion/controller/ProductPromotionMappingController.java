@@ -26,23 +26,38 @@ public class ProductPromotionMappingController {
 	@Autowired
 	private ProductPromotionRepository productPromotionRepository;
 
-	@GetMapping("/meru/product/promotionmapping/{promotionId}")
-	public List<Long> getProducts(@PathVariable Long promotionId) {
-		ProductPromotion p = productPromotionRepository.findById(promotionId).get();
-		System.out.println(p);
-		List<ProductPromotionMapping> mappingList = mappingRepository.findAllByproductPromotion(p);
-		if (mappingList == null) {
-			throw new ResourceNotFoundException("PromotionId-" + promotionId);
+	@GetMapping("/meru/product/promotionmapping/{prodId}")
+	public List<Long> getPromotion(@PathVariable Long prodId) {
+		List<ProductPromotionMapping> mappings = mappingRepository.findByProdId(prodId);
+
+		if (mappings == null) {
+			throw new ResourceNotFoundException("ProductId-" + prodId);
 		}
-		List<Long> mappings = new ArrayList<>();
-		mappingRepository.findAllByproductPromotion(p).forEach(d -> {
-			mappings.add(d.getProdId());
-		});
+
+		List<Long> promIds = new ArrayList<Long>();
+		for (ProductPromotionMapping pid : mappings)
+			promIds.add(pid.getProductPromotion().getPromotionId());
 
 //	List<ProductPromotionMapping> mappings=	(List<ProductPromotionMapping>) mappingRepository.findAllByPromotionId(promotionId);
 //			List<Long> products = promotionMapping.get().getProdId();
-		return mappings;
+		return promIds;
 	}
+
+	/*
+	 * @GetMapping("/meru/product/promotionmapping/{promotionId}") public List<Long>
+	 * getProducts(@PathVariable Long promotionId) { ProductPromotion p =
+	 * productPromotionRepository.findById(promotionId).get();
+	 * System.out.println(p); List<ProductPromotionMapping> mappingList =
+	 * mappingRepository.findAllByproductPromotion(p); if (mappingList == null) {
+	 * throw new ResourceNotFoundException("PromotionId-" + promotionId); }
+	 * List<Long> mappings = new ArrayList<>();
+	 * mappingRepository.findAllByproductPromotion(p).forEach(d -> {
+	 * mappings.add(d.getProdId()); });
+	 * 
+	 * // List<ProductPromotionMapping> mappings= (List<ProductPromotionMapping>)
+	 * mappingRepository.findAllByPromotionId(promotionId); // List<Long> products =
+	 * promotionMapping.get().getProdId(); return mappings; }
+	 */
 
 	@GetMapping("/meru/product/promotionmappings")
 	public List<ProductPromotionMapping> getAllMappings() {
@@ -57,15 +72,16 @@ public class ProductPromotionMappingController {
 
 	@PostMapping("/meru/product/promotionmapping")
 	public List<ProductPromotionMapping> applyPromotion(@RequestBody List<ProductPromotionMapping> mapping) {
+		Long promtionId;
+		List<ProductPromotionMapping> updated = new ArrayList<ProductPromotionMapping>();
 
-		Long promtionId = mapping.get(0).getProductPromotion().getPromotionId();
-
-		ProductPromotion p = productPromotionRepository.findById(promtionId).get();
-		List<ProductPromotionMapping> updated = new ArrayList<>();
-		mapping.forEach(d -> {
-			updated.add(new ProductPromotionMapping(d.getProdId(), p));
-		});
-
+		for (int i = 0; i < mapping.size(); i++) {
+			promtionId = mapping.get(i).getProductPromotion().getPromotionId();
+			ProductPromotion p = productPromotionRepository.findById(promtionId).get();
+				
+			updated.add(new ProductPromotionMapping(mapping.get(i).getProdId(), p));
+			
+		}
 		return (List<ProductPromotionMapping>) mappingRepository.saveAll(updated);
 
 	}
