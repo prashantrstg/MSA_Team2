@@ -28,7 +28,7 @@ public class ProductPromotionMappingController {
 
 	@GetMapping("/meru/product/promotionmapping/{prodId}")
 	public List<Long> getPromotion(@PathVariable Long prodId) {
-		List<ProductPromotionMapping> mappings = mappingRepository.findByProductPromotionMappingId(prodId);
+		List<ProductPromotionMapping> mappings = mappingRepository.findByProdId(prodId);
 
 		if (mappings == null) {
 			throw new ResourceNotFoundException("ProductId-" + prodId);
@@ -69,6 +69,7 @@ public class ProductPromotionMappingController {
 		}
 		return mappings;
 	}
+	
 
 	@PostMapping("/meru/product/promotionmapping")
 	public List<ProductPromotionMapping> applyPromotion(@RequestBody List<ProductPromotionMapping> mapping) {
