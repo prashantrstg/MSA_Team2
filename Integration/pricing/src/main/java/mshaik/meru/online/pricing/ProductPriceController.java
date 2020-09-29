@@ -27,7 +27,17 @@ public class ProductPriceController
 	
 	@Autowired
 	CloudConfig  cfg;
-		
+
+	//Retrieving Product Price
+	@GetMapping("/")
+	public String welcomePage() 
+	{
+		String str=" ******   Welcome to Product Price Microservice   ******"
+				+ "\r\n" + "  Syntax to get the Detailes of a Product price is" 
+				+ "\r\n" + "GET http://<host>:9191/meru/product/price/PRODUCTID \n\n\n\n\n";
+		return str;
+	}
+	
 	//Retrieving Product Price
 	@GetMapping("/meru/product/price/{prodid}")
 	@HystrixCommand(fallbackMethod="retrieveDefaultPrice")
