@@ -14,7 +14,8 @@ public interface ProductPromotionMappingRepository extends CrudRepository<Produc
 	//void findAllBypromotionId();
 
 //	Iterable<ProductPromotionMapping>  findByPromotionId(Long promotionId);
+List<ProductPromotionMapping> findAllByproductPromotion(ProductPromotion p );
 
-	List<ProductPromotionMapping> findAllByproductPromotion(ProductPromotion p );
+	List<ProductPromotionMapping> findByProdId(Long prodId);
 
 }
