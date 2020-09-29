@@ -33,16 +33,16 @@ public class ProductPriceController
 	@HystrixCommand(fallbackMethod="retrieveDefaultPrice")
 	public ProductPrice retrieveProductPrice(@PathVariable long prodid) 
 	{			
-		if (Objects.isNull(cfg))
-		{
-			System.out.print("CloudConfig Object is NULL=" + cfg.toString());
+		if ( cfg.getTaxadjpct() == null )
 			cfg.setTaxadjpct("0");
-			cfg.setMaxtaxpct("10");
-		}
-		System.out.print("CloudConfig is Tax Adj=" + cfg.getTaxadjpct() + " Max=" + cfg.getMaxtaxpct() + " ");		
+
+		if ( cfg.getMaxtaxpct() == null )
+			cfg.setMaxtaxpct("20");
+			
+		System.out.println("CloudConfig is Tax Adj=<" + cfg.getTaxadjpct() + ">" + ",Max=<" + cfg.getMaxtaxpct() + ">");
 		double taxadjust = Double.parseDouble(cfg.getTaxadjpct());
 		double maxtaxpct = Double.parseDouble(cfg.getMaxtaxpct());
-		System.out.printf("CloudConfig After integer conversion Tax=" + taxadjust + " Max=" + maxtaxpct );
+		System.out.print("CloudConfig After integer conversion Tax=<" + taxadjust + ">" + ",Max=<" + maxtaxpct + ">");		
 
 		Optional<ProductPrice> price =  repo.findById(prodid);
 		if(!price.isPresent())
